@@ -62,6 +62,8 @@ export interface ShowMoreProps {
     isNext: boolean
 }
 
+export type Option = Record<"label" | "value", string> & Record<string, string>
+
 export interface SearchManuFacturerProps {
     manufacturer: string
     setManuFacturer: (manufacturer: string) => void

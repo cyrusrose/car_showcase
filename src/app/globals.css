@@ -115,7 +115,7 @@
 /* START: Home styles */
 
 .home__text-container {
-    @apply flex flex-col items-start justify-start gap-y-2.5 text-black;
+    @apply flex flex-col items-start justify-start gap-y-2.5 text-gray-900;
 }
 
 .home__filters {
@@ -245,7 +245,7 @@
 }
 
 .searchbar__input {
-    @apply bg-light-white h-[48px] w-full cursor-pointer rounded-r-full p-4 pl-12 text-sm outline-none max-sm:rounded-full;
+    @apply bg-light-white h-[48px] w-full cursor-pointer rounded-r-full p-4 pl-12 text-sm font-normal text-gray-800 outline-none max-sm:rounded-full;
 }
 /* END: searchbar styles */
 
