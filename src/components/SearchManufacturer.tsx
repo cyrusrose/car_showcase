@@ -71,7 +71,8 @@ const SearchManufacturer = ({
                                             cn(
                                                 "search-manufacturer__option relative text-gray-900",
                                                 {
-                                                    active: "bg-primary text-white"
+                                                    "bg-primary text-white":
+                                                        active
                                                 }
                                             )
                                         }
@@ -82,8 +83,8 @@ const SearchManufacturer = ({
                                                     className={cn(
                                                         "block truncate font-normal",
                                                         {
-                                                            selected:
-                                                                "font-medium"
+                                                            "font-medium":
+                                                                selected
                                                         }
                                                     )}>
                                                     {item}
@@ -95,7 +96,8 @@ const SearchManufacturer = ({
                                                         className={cn(
                                                             "absolute inset-y-0 left-0 flex items-center bg-primary pl-3 text-primary-foreground",
                                                             {
-                                                                active: "text-white"
+                                                                "text-white":
+                                                                    active
                                                             }
                                                         )}></span>
                                                 ) : null}
