@@ -1,30 +1,49 @@
 import { MouseEventHandler } from "react"
 
-export interface CarProps {
-    city_mpg: number
-    class: string
-    combination_mpg: number
-    cylinders: number
-    displacement: number
-    drive: string
-    fuel_type: string
-    highway_mpg: number
-    make: string
-    model: string
-    transmission: string
-    year: number
-}
+import { CarsQuery } from "@/generated/graphql"
+
+export type CarEdge = CarsQuery["feed"]["edges"] extends
+    | (infer U)[]
+    | null
+    | undefined
+    ? U
+    : never
+
+export type Car = CarEdge["node"]
+
+// export interface CarProps {
+//     city_mpg: number
+//     class: string
+//     combination_mpg: number
+//     cylinders?: number | null
+//     displacement?: number | null
+//     drive: string
+//     fuel_type: string
+//     highway_mpg: number
+//     make: string
+//     model: string
+//     transmission: string
+//     year: number
+// }
 
 export interface FilterProps {
     manufacturer?: string
     year?: number
     model?: string
-    limit?: number
+    first?: number
     fuel?: string
+    after?: string
 }
 
 export interface HomeProps {
-    searchParams: FilterProps
+    searchParams: {
+        manufacturer?: string
+        year?: string
+        model?: string
+        first?: string
+        fuel?: string
+        after?: string
+    }
 }
 
 export interface CarCardProps {
@@ -59,10 +78,8 @@ export interface CustomFilterProps {
 
 export interface ShowMoreProps {
     pageNumber: number
-    isNext: boolean
+    hasNext: boolean
 }
-
-export type Option = Record<"label" | "value", string> & Record<string, string>
 
 export interface SearchManuFacturerProps {
     manufacturer: string

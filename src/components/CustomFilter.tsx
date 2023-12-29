@@ -7,6 +7,7 @@ import { Listbox, Transition } from "@headlessui/react"
 
 import { CustomFilterProps } from "@/types"
 import { updateSearchParams } from "@/lib/callback"
+import { cn } from "@/lib/utils"
 
 export default function CustomFilter({ title, options }: CustomFilterProps) {
     const router = useRouter()
@@ -14,7 +15,9 @@ export default function CustomFilter({ title, options }: CustomFilterProps) {
 
     // update the URL search parameters and navigate to the new URL
     const handleUpdateParams = (e: { title: string; value: string }) => {
-        const newPathName = updateSearchParams(title, e.value.toLowerCase())
+        const newPathName = updateSearchParams({
+            [title]: e.value.toLowerCase()
+        })
 
         router.push(newPathName)
     }
@@ -51,21 +54,21 @@ export default function CustomFilter({ title, options }: CustomFilterProps) {
                                 <Listbox.Option
                                     key={option.title}
                                     className={({ active }) =>
-                                        `relative cursor-default select-none px-4 py-2 ${
-                                            active
-                                                ? "bg-primary-blue text-white"
-                                                : "text-gray-900"
-                                        }`
+                                        cn({
+                                            "relative cursor-default select-none px-4 py-2 text-gray-900":
+                                                true,
+                                            "bg-primary-blue text-white": active
+                                        })
                                     }
                                     value={option}>
                                     {({ selected }) => (
                                         <>
                                             <span
-                                                className={`block truncate ${
-                                                    selected
-                                                        ? "font-medium"
-                                                        : "font-normal"
-                                                }`}>
+                                                className={cn({
+                                                    "block truncate font-normal":
+                                                        true,
+                                                    "font-bold": selected
+                                                })}>
                                                 {option.title}
                                             </span>
                                         </>

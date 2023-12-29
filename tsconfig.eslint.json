@@ -10,6 +10,7 @@
         "prettier.config.js",
         "postcss.config.js",
         "next.config.js",
-        "next-env.d.ts"
+        "next-env.d.ts",
+        "codegen.ts"
     ]
 }

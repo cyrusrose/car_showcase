@@ -27,7 +27,10 @@ const config: Config = {
                     DEFAULT: "rgba(59,60,152,0.03)",
                     100: "rgba(59,60,152,0.02)"
                 },
-
+                "primary-blue": {
+                    DEFAULT: "#2B59FF",
+                    100: "#F5F8FF"
+                },
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",

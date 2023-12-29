@@ -2,6 +2,8 @@ import Footer from "@/components/Footer"
 import "./globals.css"
 import type { Metadata } from "next"
 import NavBar from "@/components/Navbar"
+import { ApolloWrapper } from "@/lib/apollo-wrapper"
+import ClientSide from "@/components/ClientSide"
 
 export const metadata: Metadata = {
     title: "Car Hub",
@@ -17,8 +19,9 @@ export default function RootLayout({
         <html lang="en">
             <body>
                 <NavBar />
-                {children}
+                <ApolloWrapper>{children}</ApolloWrapper>
                 <Footer />
+                <ClientSide />
             </body>
         </html>
     )

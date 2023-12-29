@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import SearchManufacturer from "./SearchManufacturer"
+import { updateSearchParams } from "@/lib/callback"
 
 const SearchButton = ({ otherClasses }: { otherClasses: string }) => (
     <button type="submit" className={cn("z-10 -ml-3", otherClasses)}>
@@ -21,44 +22,24 @@ const SearchButton = ({ otherClasses }: { otherClasses: string }) => (
 
 const SearchBar = () => {
     const [manufacturer, setManuFacturer] = useState("")
-    const model = useRef("")
-
-    console.log(manufacturer)
+    const modelRef = useRef<HTMLInputElement | null>(null)
 
     const router = useRouter()
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (manufacturer.trim() === "" && model.current.trim() === "") {
-            return alert("Please provide some input")
-        }
+        const model = modelRef.current?.value.trim().toLowerCase() || undefined
+        let _manufacturer = manufacturer.trim().toLowerCase() || undefined
+        if (_manufacturer === "all") _manufacturer = undefined
 
-        updateSearchParams(model.current.toLowerCase(), manufacturer)
-    }
-
-    const updateSearchParams = (model: string, manufacturer: string) => {
-        // Create a new URLSearchParams object using the current URL search parameters
-        const searchParams = new URLSearchParams(window.location.search)
-
-        // Update or delete the 'model' search parameter based on the 'model' value
-        if (model) {
-            searchParams.set("model", model)
-        } else {
-            searchParams.delete("model")
-        }
-
-        // Update or delete the 'manufacturer' search parameter based on the 'manufacturer' value
-        if (manufacturer) {
-            searchParams.set("manufacturer", manufacturer)
-        } else {
-            searchParams.delete("manufacturer")
-        }
-
-        // Generate the new pathname with the updated search parameters
-        const newPathname = `${
-            window.location.pathname
-        }?${searchParams.toString()}`
+        const newPathname = updateSearchParams(
+            {
+                model,
+                manufacturer: _manufacturer
+            },
+            "#search"
+        )
 
         router.push(newPathname)
     }
@@ -83,10 +64,7 @@ const SearchBar = () => {
                 <input
                     type="text"
                     name="model"
-                    value={model.current}
-                    onChange={(e) => {
-                        model.current = e.target.value
-                    }}
+                    ref={modelRef}
                     placeholder="Tiguan..."
                     className="searchbar__input"
                 />
