@@ -21,6 +21,7 @@ export default async function Home({ searchParams }: HomeProps) {
     })
 
     const pageInfo = data.feed.pageInfo
+    const makeCount = data.feed.makeCount
     const isDataEmpty = data.feed.totalCount === 0
 
     return (
@@ -60,7 +61,6 @@ export default async function Home({ searchParams }: HomeProps) {
                                     <CarCard key={cursor} car={node} />
                                 ))}
                             </div>
-
                             <ShowMore
                                 pageNumber={
                                     isNaN(Number(searchParams.first))
@@ -70,6 +70,12 @@ export default async function Home({ searchParams }: HomeProps) {
                                 }
                                 hasNext={pageInfo.hasNextPage}
                             />
+                            {makeCount && (
+                                <section className="flex-center mt-3 text-sm text-gray-500">
+                                    Total requests with {makeCount.make}:{" "}
+                                    {makeCount?.count}
+                                </section>
+                            )}
                         </section>
                     )}
                 </div>

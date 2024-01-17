@@ -21,6 +21,10 @@ const GET_CARS = g(/* GraphQL */ `
             after: $after
         ) {
             totalCount
+            makeCount {
+                make
+                count
+            }
             pageInfo {
                 endCursor
                 hasNextPage
