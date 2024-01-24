@@ -2,6 +2,7 @@ import { FilterProps } from "@/types"
 import { getClient } from "./apollo-client"
 import { gql as g } from "@/generated/gql"
 import { PAGE_COUNT } from "@/constants"
+import cookie from "cookie"
 
 const GET_CARS = g(/* GraphQL */ `
     query Cars(
@@ -51,10 +52,28 @@ const GET_CARS = g(/* GraphQL */ `
     }
 `)
 
+export async function login() {
+    return fetch(`${process.env.API_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            email: process.env.EMAIL,
+            password: process.env.PASSWORD
+        })
+    })
+}
+
 export async function fetchCars(filters: FilterProps) {
     const { manufacturer, year, model, first, fuel, after } = filters
 
     const client = getClient()
+    const resp = (await login()).headers.get("set-cookie")!
+
+    const Authentication = cookie.parse(resp)["Authentication"]
+
+    console.log(Authentication)
 
     const cars = await client.query({
         query: GET_CARS,
@@ -70,6 +89,9 @@ export async function fetchCars(filters: FilterProps) {
         context: {
             fetchOptions: {
                 next: { revalidate: 0 }
+            },
+            headers: {
+                Authentication: Authentication
             }
         }
     })

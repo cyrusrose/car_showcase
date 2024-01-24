@@ -4,8 +4,10 @@ import Hero from "@/components/Hero"
 import SearchBar from "@/components/Searchbar"
 import ShowMore from "@/components/ShowMore"
 import { PAGE_COUNT, fuels, yearsOfProduction } from "@/constants"
-import { fetchCars } from "@/lib/callback-server"
+import { fetchCars, login } from "@/lib/callback-server"
 import { HomeProps } from "@/types"
+
+import { cookies } from "next/headers"
 
 export default async function Home({ searchParams }: HomeProps) {
     const { data, error, loading } = await fetchCars({
